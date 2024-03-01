@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  spring-app:
+    image: openjdk:17-jdk-alpine
+    container_name: spring-app
+    expose:
+      - 8081
+    ports:
+      - 8081:8081
+    volumes:
+      - ./build/libs/api-0.0.1-SNAPSHOT.jar:/app.jar
+    depends_on:
+      - mysql-database
+    env_file:
+      - ./.env.spring
+    command: ["java", "-jar", "/app.jar"]
+  
+  mysql-databse:
+    image: mysql:latest
+    container_name: mysql-database
+    expose:
+      - 3306
+    env_file:
+      - ./.env.mysql
+    volumes:
+      - ./data:/var/lib/mysql

@@ -35,6 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 data/
 .env.mysql
 .env.spring
+=======
+
+.env.spring
+.env.mysql
+>>>>>>> 21cabdd (added inital docker-compose file)
