@@ -1,7 +1,6 @@
 package library.backend.api.dto;
 
 import library.backend.api.utils.Status;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
