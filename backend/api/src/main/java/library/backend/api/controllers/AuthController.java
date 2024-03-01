@@ -9,34 +9,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import library.backend.api.dto.AuthResponseDto;
-import library.backend.api.dto.LoginRequestDto;
+import library.backend.api.dto.LoginByEmailDto;
+import library.backend.api.dto.LoginByPhoneNoDto;
 import library.backend.api.dto.SignUpRequestDto;
 import library.backend.api.services.AuthService;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
+    @PostMapping("/login/email")
+    public ResponseEntity<AuthResponseDto> loginUserByEmail(
+            @Valid @RequestBody LoginByEmailDto dto) {
+
+        AuthResponseDto response = authService.loginByEmail(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        AuthResponseDto response = authService.login(loginRequestDto);
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(response);
+    @PostMapping("/login/phone")
+    public ResponseEntity<AuthResponseDto> loginUserByPhoneNo(
+            @Valid @RequestBody LoginByPhoneNoDto dto) {
+
+        AuthResponseDto response = authService.loginByPhoneNo(dto);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponseDto> signUp(@Valid @RequestBody SignUpRequestDto signUpRequestDto) {
+    public ResponseEntity<AuthResponseDto> signUp(
+            @Valid @RequestBody SignUpRequestDto signUpRequestDto) {
+
         AuthResponseDto response = authService.signUp(signUpRequestDto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
 }
