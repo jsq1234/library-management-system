@@ -9,10 +9,8 @@ import library.backend.api.utils.Status;
 import lombok.RequiredArgsConstructor;
 import library.backend.api.dto.AuthResponseDto;
 import library.backend.api.dto.LoginByEmailDto;
-import library.backend.api.dto.LoginByPhoneNo;
-import library.backend.api.dto.LoginRequestDto;
+import library.backend.api.dto.LoginByPhoneNoDto;
 import library.backend.api.dto.SignUpRequestDto;
-import library.backend.api.exceptions.MissingLoginFieldsException;
 import library.backend.api.exceptions.UserAlreadyExistsException;
 import library.backend.api.models.User;
 import library.backend.api.repositories.UserRepository;
@@ -30,7 +28,7 @@ public class AuthService {
         return loginAndGenerateJwtToken(loginRequest.email(), loginRequest.password());
     }
 
-    public AuthResponseDto loginByPhoneNo(LoginByPhoneNo loginRequest){
+    public AuthResponseDto loginByPhoneNo(LoginByPhoneNoDto loginRequest){
         return loginAndGenerateJwtToken(loginRequest.phoneNo(), loginRequest.password());
     }
 
