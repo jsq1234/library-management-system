@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import library.backend.api.exceptions.BookNotFoundException;
 import library.backend.api.models.Book;
 import library.backend.api.repositories.BookRepository;
 
@@ -13,27 +14,35 @@ public class BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    void createBook(Book book) {
+    public Book getBookById(Long id){
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("book/" + id + " doesn't exists."));
+        return book;
+    }
+    public Book createBook(Book book) {
+        return bookRepository.save(book);
+    }
+
+    public void deleteBook(Long id) {
+        if(!bookRepository.existsById(id)){
+            throw new BookNotFoundException("book/" + id + " doesn't exists.");
+        }
+        bookRepository.deleteById(id);
+    }
+
+    public void updateBook(Book book) {
         bookRepository.save(book);
     }
 
-    void deleteBook(Book book) {
-        bookRepository.deleteById(book.getId());
-    }
-
-    void updateBook(Book book) {
-        bookRepository.save(book);
-    }
-
-    List<Book> getAllBooks() {
+    public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
-    List<Book> getAvailableBooks() {
+    public List<Book> getAvailableBooks() {
         return bookRepository.findByQuantityGreaterThan(0);
     }
 
-    List<Book> searchBooks(String title) {
+    public List<Book> searchBooks(String title) {
         if (title == null || title.length() == 0) {
             return new ArrayList<>();
         }

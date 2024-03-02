@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -28,7 +29,7 @@ import library.backend.api.config.SecurityConfig;
 import library.backend.api.controllers.BookController;
 import library.backend.api.models.Book;
 import library.backend.api.repositories.BookRepository;
-
+import library.backend.api.services.BookService;
 import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
@@ -39,12 +40,16 @@ import java.time.LocalDate;
         controllers = {BookController.class})
 @ActiveProfiles(profiles = {"test"})
 @AutoConfigureMockMvc(addFilters = false)
+@Import(BookService.class)
 public class BookControllerTest {
     @Autowired
     private MockMvc mvc;
 
     @Autowired
     ObjectMapper mapper;
+
+    @Autowired
+    private BookService bookService;
 
     @MockBean
     private BookRepository bookRepository;
@@ -81,5 +86,22 @@ public class BookControllerTest {
             .andExpect(status().isCreated());
 
         verify(bookRepository).save(book);
+    }
+
+    @Test
+    public void DeleteBookFromDatabaseTest() throws Exception{
+        Book book = Book.builder()
+                        .id(1L)
+                        .title("test book")
+                        .author("test author")
+                        .ISBN("123-1234567890")
+                        .genre("Physics").price(100.0f).quantity(5).publishDate(LocalDate.of(2024, 2, 10))
+                        .build();
+        when(bookRepository.existsById(1L)).thenReturn(true);
+        
+        mvc.perform(delete("/book/{id}", 1L))
+            .andExpect(status().isOk());
+        
+        verify(bookRepository).deleteById(1L);
     }
 }
