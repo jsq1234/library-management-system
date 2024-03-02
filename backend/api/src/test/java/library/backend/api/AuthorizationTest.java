@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -26,6 +27,7 @@ import java.util.HashMap;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = { "test" })
 public class AuthorizationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -44,7 +46,7 @@ public class AuthorizationTest {
 
         User mockUser = new User();
         mockUser.setEmail("test@example.com");
-        mockUser.setRole("ROLE_ADMIN");
+        mockUser.setRole("ADMIN");
         mockUser.setPassword(passwordEncoder.encode("password"));
 
         when(userRepository.findByEmail(any())).thenReturn(java.util.Optional.of(mockUser));
@@ -72,7 +74,7 @@ public class AuthorizationTest {
     void unauthorizedAccessToBookCreationForUserForbidden() throws Exception {
         User mockUser = new User();
         mockUser.setEmail("test@example.com");
-        mockUser.setRole("ROLE_USER");
+        mockUser.setRole("USER");
         mockUser.setPassword(passwordEncoder.encode("password"));
 
         when(userRepository.findByEmail(any())).thenReturn(java.util.Optional.of(mockUser));
@@ -101,7 +103,7 @@ public class AuthorizationTest {
         requestBody.put("email", email);
         requestBody.put("password", password);
 
-        var request = MockMvcRequestBuilders.post("/api/auth/login")
+        var request = MockMvcRequestBuilders.post("/api/auth/login/email")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody));
 

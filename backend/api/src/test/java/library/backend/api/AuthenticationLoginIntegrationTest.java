@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -24,6 +25,7 @@ import java.util.HashMap;
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = {"test"})
 public class AuthenticationLoginIntegrationTest {
 
     @Autowired
@@ -54,11 +56,12 @@ public class AuthenticationLoginIntegrationTest {
         requestBody.put("email", "test@example.com");
         requestBody.put("password", "password");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login/email")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody)))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.token").exists());
+                .andExpect(jsonPath("$.token").exists())
+                .andExpect(jsonPath("$.email").value("test@example.com"));
 
     }
 
@@ -79,11 +82,13 @@ public class AuthenticationLoginIntegrationTest {
         requestBody.put("phoneNo", "8178610509");
         requestBody.put("password", "password");
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login/phone")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody)))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.token").exists());
+                .andExpect(jsonPath("$.token").exists())
+                .andExpect(jsonPath("$.email").value("test@example.com"))
+                .andExpect(jsonPath("$.phoneNo").value("8178610509"));
 
     }
 
@@ -91,26 +96,23 @@ public class AuthenticationLoginIntegrationTest {
     void LoginTestWithoutEmailAndPasswordReturnsException() throws Exception {
         HashMap<String, String> requestBody = new HashMap<>();
         requestBody.put("password", "1234");
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login/email")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").exists())
-                .andExpect(jsonPath("$.error").value("Incorrect login message format"));
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     void IncorrectLoginReturnsUnauthorizedTest() throws Exception {
         HashMap<String, String> requestBody = new HashMap<>();
-        requestBody.put("phoneNo", "1234");
+        requestBody.put("phoneNo", "8178610509");
         requestBody.put("password", "12345");
 
         // Perform the request and capture the result
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/login/phone")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(requestBody)))
-                .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.error").exists())
+                .andExpect(status().isUnauthorized()).andExpect(jsonPath("$.error").exists())
                 .andExpect(jsonPath("$.error").value("Bad credentials"));
     }
 

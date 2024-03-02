@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -22,6 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles(profiles = {"test"})
 public class AuthenticationSignUpIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -46,12 +48,12 @@ public class AuthenticationSignUpIntegrationTest {
 
         when(userRepository.existsByEmail(any())).thenReturn(true);
 
-        SignUpRequestDto dto = new SignUpRequestDto("test", "test@example.com", "8178610509", "password");
+        SignUpRequestDto dto =
+                new SignUpRequestDto("test", "test@example.com", "8178610509", "password");
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(dto)))
-                .andExpect(status().isConflict())
+                .content(objectMapper.writeValueAsString(dto))).andExpect(status().isConflict())
                 .andExpect(jsonPath("$.error").exists())
                 .andExpect(jsonPath("$.error").value("User already exists"));
     }
@@ -60,14 +62,14 @@ public class AuthenticationSignUpIntegrationTest {
     void SignUp_ReturnsJwtToken() throws Exception {
         when(userRepository.existsByEmail(any())).thenReturn(false);
 
-        SignUpRequestDto dto = new SignUpRequestDto("manan", "text@example.com", "8178610509", "password");
+        SignUpRequestDto dto =
+                new SignUpRequestDto("manan", "text@example.com", "8178610509", "password");
 
         var request = MockMvcRequestBuilders.post("/api/auth/signup")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(dto));
 
-        mockMvc.perform(request)
-                .andExpect(status().isCreated())
+        mockMvc.perform(request).andExpect(status().isCreated())
                 .andExpect(jsonPath("$.token").exists())
                 .andExpect(jsonPath("$.status").value("REGISTER_SUCCESS"));
 
