@@ -22,47 +22,44 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-        private final AuthenticationEntryPoint authenticationEntryPoint;
-        private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-        CorsConfigurationSource corsConfigurationSource() {
-                CorsConfiguration configuration = new CorsConfiguration();
-                configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-                configuration.setAllowedMethods(Arrays.asList("*"));
-                configuration.setAllowedHeaders(Arrays.asList("*"));
-                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                source.registerCorsConfiguration("/**", configuration);
-                return source;
-        }
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http)
-                        throws Exception {
-                // enable cors with the above config
-                http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
-                // disable csrf
-                http.csrf(AbstractHttpConfigurer::disable);
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        // enable cors with the above config
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+        // disable csrf
+        http.csrf(AbstractHttpConfigurer::disable);
 
-                // HTTP Request Filter
-                http.authorizeHttpRequests(
-                                requestMatcher -> requestMatcher
-                                                .requestMatchers("/api/auth/login/**").permitAll()
-                                                .requestMatchers("/api/auth/signup/**").permitAll()
-                                                .requestMatchers("/error/**").permitAll()
-                                                .anyRequest().authenticated());
+        // HTTP Request Filter
+        http.authorizeHttpRequests(
+                requestMatcher -> requestMatcher
+                        .requestMatchers("/api/auth/login/**").permitAll()
+                        .requestMatchers("/api/auth/signup/**").permitAll()
+                        .requestMatchers("/error/**").permitAll().anyRequest().authenticated());
 
-                // Authentication Entry Point -> Exception Handler
-                http.exceptionHandling(
-                                exceptionConfig -> exceptionConfig.authenticationEntryPoint(
-                                                authenticationEntryPoint));
+        // Authentication Entry Point -> Exception Handler
+        http.exceptionHandling(exceptionConfig -> exceptionConfig
+                .authenticationEntryPoint(authenticationEntryPoint));
 
-                // Set stateless session policy
-                http.sessionManagement(
-                                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        // Set stateless session policy
+        http.sessionManagement(
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-                // Add JWT authentication filter
-                http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        // Add JWT authentication filter
+        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-                return http.build();
-        }
+        return http.build();
+    }
 }
