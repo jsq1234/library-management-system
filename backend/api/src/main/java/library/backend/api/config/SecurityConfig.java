@@ -18,7 +18,6 @@ import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {

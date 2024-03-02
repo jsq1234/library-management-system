@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import jakarta.validation.ConstraintViolationException;
 import library.backend.api.dto.ErrorDto;
 import library.backend.api.dto.ValidationErrorDto;
+import library.backend.api.exceptions.BookNotFoundException;
 import library.backend.api.exceptions.UserAlreadyExistsException;
+import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice
+@Slf4j
 public class UserExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
@@ -41,5 +44,11 @@ public class UserExceptionHandler {
                 .forEach(err -> errMap.put(err.getField(), err.getDefaultMessage()));
         var error = new ValidationErrorDto(HttpStatus.BAD_REQUEST, errMap);
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public ResponseEntity<?> handleBookNotFoundException(BookNotFoundException ex) {
+        log.info(ex.getMessage());
+        return ResponseEntity.notFound().build();
     }
 }

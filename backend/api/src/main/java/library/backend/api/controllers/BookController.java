@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.Valid;
+import library.backend.api.exceptions.BookNotFoundException;
 import library.backend.api.models.Book;
 import library.backend.api.repositories.BookRepository;
 
@@ -22,19 +23,15 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBooks(@PathVariable Long id) {
-        Book book = bookRepository.findById(id).orElse(null);
-
-        if (book == null) {
-            return ResponseEntity.notFound().build();
-        }
-
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("book/" + id + " doesn't exists."));
         return ResponseEntity.ok(book);
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        Book savedBook = bookRepository.save(book);
-        return new ResponseEntity<>(savedBook, HttpStatusCode.valueOf(200));
+    public ResponseEntity<Book> addBook(@Valid @RequestBody Book book) {
+        Book newBook = bookRepository.save(book);
+        return ResponseEntity.status(201).body(newBook);
     }
 }

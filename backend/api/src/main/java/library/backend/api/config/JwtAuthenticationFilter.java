@@ -15,15 +15,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import library.backend.api.services.EmailDetailsServiceImpl;
 import library.backend.api.utils.JwtUtils;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final EmailDetailsServiceImpl emailDetailsService;
-
-    public JwtAuthenticationFilter(EmailDetailsServiceImpl emailDetailsService) {
-        this.emailDetailsService = emailDetailsService;
-    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
