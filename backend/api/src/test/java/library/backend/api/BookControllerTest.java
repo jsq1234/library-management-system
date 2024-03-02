@@ -48,9 +48,6 @@ public class BookControllerTest {
     @Autowired
     ObjectMapper mapper;
 
-    @Autowired
-    private BookService bookService;
-
     @MockBean
     private BookRepository bookRepository;
 
