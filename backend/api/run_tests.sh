@@ -87,10 +87,10 @@ fi
 
 if [ -n "$test_name" ]; then
     echo "${bold}${cyan}Running test: library.backend.api.${test_name}${reset}"
-    ./gradlew clean test --tests "library.backend.api.${test_name}"
+    ./gradlew test --tests "library.backend.api.${test_name}"
 else
     echo "${bold}${cyan}Running all tests...${reset}"
-    ./gradlew clean test
+    ./gradlew test
 fi
 
 # Stop and remove MySQL Docker container
