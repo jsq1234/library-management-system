@@ -1,0 +1,254 @@
+[
+    {
+        "title": "The Great Gatsby",
+        "price": 19.99,
+        "quantity": 5,
+        "author": "F. Scott Fitzgerald",
+        "isbn": "123-4567890123",
+        "genre": "Classic",
+        "publishDate": "1925-04-10"
+    },
+    {
+        "title": "To Kill a Mockingbird",
+        "price": 15.50,
+        "quantity": 8,
+        "author": "Harper Lee",
+        "isbn": "456-7890123456",
+        "genre": "Fiction",
+        "publishDate": "1960-07-11"
+    },
+    {
+        "title": "1984",
+        "price": 12.75,
+        "quantity": 10,
+        "author": "George Orwell",
+        "isbn": "789-0123456789",
+        "genre": "Dystopian",
+        "publishDate": "1949-06-08"
+    },
+    {
+        "title": "The Hobbit",
+        "price": 24.99,
+        "quantity": 3,
+        "author": "J.R.R. Tolkien",
+        "isbn": "234-5678901234",
+        "genre": "Fantasy",
+        "publishDate": "1937-09-21"
+    },
+    {
+        "title": "The Catcher in the Rye",
+        "price": 18.25,
+        "quantity": 6,
+        "author": "J.D. Salinger",
+        "isbn": "567-8901234567",
+        "genre": "Coming of Age",
+        "publishDate": "1951-07-16"
+    },
+    {
+        "title": "Pride and Prejudice",
+        "price": 16.99,
+        "quantity": 12,
+        "author": "Jane Austen",
+        "isbn": "890-1234567890",
+        "genre": "Romance",
+        "publishDate": "1813-01-28"
+    },
+    {
+        "title": "The Lord of the Rings",
+        "price": 29.95,
+        "quantity": 4,
+        "author": "J.R.R. Tolkien",
+        "isbn": "345-6789012345",
+        "genre": "Fantasy",
+        "publishDate": "1954-07-29"
+    },
+    {
+        "title": "The Alchemist",
+        "price": 14.50,
+        "quantity": 9,
+        "author": "Paulo Coelho",
+        "isbn": "678-9012345678",
+        "genre": "Fiction",
+        "publishDate": "1988-09-01"
+    },
+    {
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "price": 22.75,
+        "quantity": 7,
+        "author": "J.K. Rowling",
+        "isbn": "901-2345678901",
+        "genre": "Fantasy",
+        "publishDate": "1997-06-26"
+    },
+    {
+        "title": "The Great Expectations",
+        "price": 18.50,
+        "quantity": 5,
+        "author": "Charles Dickens",
+        "isbn": "765-4321098765",
+        "genre": "Classic",
+        "publishDate": "1861-08-01"
+    },
+    {
+        "title": "The Road",
+        "price": 15.75,
+        "quantity": 6,
+        "author": "Cormac McCarthy",
+        "isbn": "543-2109876543",
+        "genre": "Dystopian",
+        "publishDate": "2006-09-26"
+    },
+    {
+        "title": "The Fountainhead",
+        "price": 24.99,
+        "quantity": 3,
+        "author": "Ayn Rand",
+        "isbn": "987-6543210987",
+        "genre": "Philosophical Fiction",
+        "publishDate": "1943-05-07"
+    },
+    {
+        "title": "The Silent Patient",
+        "price": 21.25,
+        "quantity": 9,
+        "author": "Alex Michaelides",
+        "isbn": "678-9012345678",
+        "genre": "Mystery",
+        "publishDate": "2019-02-05"
+    },
+    {
+        "title": "The Count of Monte Cristo",
+        "price": 29.95,
+        "quantity": 4,
+        "author": "Alexandre Dumas",
+        "isbn": "345-6789012345",
+        "genre": "Adventure",
+        "publishDate": "1844-08-28"
+    },
+    {
+        "title": "The Girl on the Train",
+        "price": 14.50,
+        "quantity": 10,
+        "author": "Paula Hawkins",
+        "isbn": "890-1234567890",
+        "genre": "Thriller",
+        "publishDate": "2015-01-13"
+    },
+    {
+        "title": "The Picture of Dorian Gray",
+        "price": 22.75,
+        "quantity": 7,
+        "author": "Oscar Wilde",
+        "isbn": "901-2345678901",
+        "genre": "Gothic Fiction",
+        "publishDate": "1890-06-20"
+    },
+    {
+        "title": "The Hitchhiker's Guide to the Galaxy",
+        "price": 20.00,
+        "quantity": 11,
+        "author": "Douglas Adams",
+        "isbn": "123-4567890123",
+        "genre": "Science Fiction",
+        "publishDate": "1979-10-12"
+    },
+    {
+        "title": "The Catch-22",
+        "price": 16.99,
+        "quantity": 12,
+        "author": "Joseph Heller",
+        "isbn": "234-5678901234",
+        "genre": "Satire",
+        "publishDate": "1961-11-10"
+    },
+    {
+        "title": "The Handmaid's Tale",
+        "price": 19.99,
+        "quantity": 5,
+        "author": "Margaret Atwood",
+        "isbn": "456-7890123456",
+        "genre": "Dystopian",
+        "publishDate": "1985-09-17"
+    },
+    {
+        "title": "The Night Circus",
+        "price": 15.50,
+        "quantity": 8,
+        "author": "Erin Morgenstern",
+        "isbn": "789-0123456789",
+        "genre": "Fantasy",
+        "publishDate": "2011-09-13"
+    },
+    {
+        "title": "The Kite Runner",
+        "price": 12.75,
+        "quantity": 10,
+        "author": "Khaled Hosseini",
+        "isbn": "234-5678901234",
+        "genre": "Historical Fiction",
+        "publishDate": "2003-05-29"
+    },
+    {
+        "title": "The Stand",
+        "price": 24.99,
+        "quantity": 3,
+        "author": "Stephen King",
+        "isbn": "567-8901234567",
+        "genre": "Horror",
+        "publishDate": "1978-10-03"
+    },
+    {
+        "title": "The Scarlet Letter",
+        "price": 18.25,
+        "quantity": 6,
+        "author": "Nathaniel Hawthorne",
+        "isbn": "890-1234567890",
+        "genre": "Historical Fiction",
+        "publishDate": "1850-03-16"
+    },
+    {
+        "title": "The Martian",
+        "price": 16.99,
+        "quantity": 12,
+        "author": "Andy Weir",
+        "isbn": "345-6789012345",
+        "genre": "Science Fiction",
+        "publishDate": "2011-09-27"
+    },
+    {
+        "title": "The Color Purple",
+        "price": 29.95,
+        "quantity": 4,
+        "author": "Alice Walker",
+        "isbn": "678-9012345678",
+        "genre": "Historical Fiction",
+        "publishDate": "1982-02-25"
+    },
+    {
+        "title": "The Book Thief",
+        "price": 14.50,
+        "quantity": 9,
+        "author": "Markus Zusak",
+        "isbn": "901-2345678901",
+        "genre": "Historical Fiction",
+        "publishDate": "2005-03-14"
+    },
+    {
+        "title": "The Goldfinch",
+        "price": 22.75,
+        "quantity": 7,
+        "author": "Donna Tartt",
+        "isbn": "123-4567890123",
+        "genre": "Fiction",
+        "publishDate": "2013-10-22"
+    },
+    {
+        "title": "The Joy Luck Club",
+        "price": 20.00,
+        "quantity": 11,
+        "author": "Amy Tan",
+        "isbn": "321-0987654321",
+        "genre": "Contemporary Fiction",
+        "publishDate": "1989-02-19"
+    }
+]

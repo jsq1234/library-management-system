@@ -1,6 +1,9 @@
 package library.backend.api.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -50,4 +53,8 @@ public class BookService {
         return bookRepository.findByTitleContainingIgnoreCase(title);
     }
 
+    public Page<Book> getPagenatedBookList(int pageNumber, int size){
+        Pageable page = PageRequest.of(pageNumber,size);
+        return bookRepository.findAll(page);
+    }
 }

@@ -1,27 +1,32 @@
 package library.backend.api;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import library.backend.api.config.AuthenticationConfig;
 import library.backend.api.config.CustomAuthenticationEntryPoint;
 import library.backend.api.config.JwtAuthenticationFilter;
@@ -31,6 +36,7 @@ import library.backend.api.models.Book;
 import library.backend.api.repositories.BookRepository;
 import library.backend.api.services.BookService;
 import java.time.LocalDate;
+import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(
@@ -50,6 +56,9 @@ public class BookControllerTest {
 
     @MockBean
     private BookRepository bookRepository;
+
+    @Value("classpath:books.json")
+    Resource booksJson;
 
     @Test
     public void GetBookByIdTest() throws Exception {
@@ -101,4 +110,13 @@ public class BookControllerTest {
         
         verify(bookRepository).deleteById(1L);
     }
+
+    @Test
+    public void GetPaginatedResultTest() throws Exception{
+        List<Book> books = mapper.readValue(booksJson.getInputStream(),
+                            new TypeReference<List<Book>>(){});
+        books.forEach(bookRepository::save);
+        assertEquals((long)books.size(), bookRepository.count());
+    }
+
 }
