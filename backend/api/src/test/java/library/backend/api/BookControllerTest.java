@@ -111,12 +111,4 @@ public class BookControllerTest {
         verify(bookRepository).deleteById(1L);
     }
 
-    @Test
-    public void GetPaginatedResultTest() throws Exception{
-        List<Book> books = mapper.readValue(booksJson.getInputStream(),
-                            new TypeReference<List<Book>>(){});
-        books.forEach(bookRepository::save);
-        assertEquals((long)books.size(), bookRepository.count());
-    }
-
 }

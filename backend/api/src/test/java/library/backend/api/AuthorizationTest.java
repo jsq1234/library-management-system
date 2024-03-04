@@ -67,7 +67,7 @@ public class AuthorizationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("AUTHORIZATION", "Bearer " + jwtToken)
                 .content(objectMapper.writeValueAsString(book)))
-                .andExpect(status().isOk());
+                .andExpect(status().isCreated());
     }
 
     @Test

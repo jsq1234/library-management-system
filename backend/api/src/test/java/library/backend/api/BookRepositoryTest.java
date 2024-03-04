@@ -25,8 +25,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
     "logging.level.ROOT= WARN",
     "logging.level.org.springframework.test.context.transaction= DEBUG",
 })
-@ActiveProfiles(profiles = {"test"})
-//@AutoConfigureTestDatabase(replace=Replace.NONE)
+@ActiveProfiles(profiles = {"test2"})
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 //@Rollback(false)
 public class BookRepositoryTest {
     @Autowired
